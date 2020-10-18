@@ -1,6 +1,8 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 /* eslint-disable no-undef */
 import assert from 'assert';
-import Scores from '../../services/Scores/Scores.ts';
+import Scores from '../../services/Scores/Scores';
 
 describe('CSV', () => {
   const scores = new Scores();

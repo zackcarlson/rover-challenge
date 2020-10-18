@@ -1,9 +1,11 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 /* eslint-disable no-undef */
 import assert from 'assert';
 import fs from 'fs';
 import os from 'os';
-import CSV from '../../services/CSV/CSV.ts';
-import { JsonType, RowType, SitterType } from '../../types/index.ts';
+import CSV from '../../services/CSV/CSV';
+import { JsonType, RowType, SitterType } from '../../types/index';
 
 describe('CSV', () => {
   const csv = new CSV();

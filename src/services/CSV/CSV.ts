@@ -1,10 +1,12 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import { createObjectCsvWriter } from 'csv-writer';
 import os from 'os';
 import fs from 'fs';
-import Scores from '../Scores/Scores.ts';
+import Scores from '../Scores/Scores';
 import {
   StayType, JsonType, RowType, SitterType,
-} from '../../types/index.ts';
+} from '../../types/index';
 import reviews from '../../models/reviews';
 
 export default class CSV {
