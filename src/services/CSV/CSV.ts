@@ -1,10 +1,11 @@
 import { createObjectCsvWriter } from 'csv-writer';
 import os from 'os';
-import Scores from './Scores';
+import fs from 'fs';
+import Scores from '../Scores/Scores.ts';
 import {
   StayType, JsonType, RowType, SitterType,
-} from '../types/index';
-import reviews from '../models/reviews.js';
+} from '../../types/index.ts';
+import reviews from '../../models/reviews';
 
 export default class CSV {
   getJsonData = (): JsonType => {
@@ -72,6 +73,10 @@ export default class CSV {
           { id: 'search_score', title: 'Search Score' },
         ],
       });
+
+      if (fs.existsSync(downloadPath)) {
+        fs.unlinkSync(downloadPath);
+      }
 
       await csvWriter.writeRecords(rows);
       console.log(`Successfully exported file to your ${downloadPath}`);

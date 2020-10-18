@@ -5,7 +5,7 @@ export default class Scores {
     let englishChars: string = '';
     for (let i = 0; i < sitterName.length; i++) {
       const char: string = sitterName[i].toLowerCase();
-      const ascii: number = char.charCodeAt(i);
+      const ascii: number = char.charCodeAt(0);
       if (ascii >= 97 && ascii <= 122) englishChars += char;
     }
     const uniqueEnglishChars: number = (new Set(englishChars).size) / 26;
