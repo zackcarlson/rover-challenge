@@ -60,7 +60,7 @@ export default class CSV {
     return sorted;
   };
 
-  writeCSV = async () => {
+  writeCSV = async (): Promise<string> => {
     try {
       const jsonData: JsonType = this.getJsonData();
       const rows: RowType[] = this.sortRows(this.createRows(jsonData));
@@ -81,10 +81,9 @@ export default class CSV {
       }
 
       await csvWriter.writeRecords(rows);
-      console.log(`Successfully exported file to your ${downloadPath}`);
-      return;
+      return `Successfully calculated and exported Rover sitter search rankings to your ${downloadPath}`;
     } catch (err) {
-      console.log('Error generating output CSV', err);
+      return 'Error calculating and exporting Rover sitter search rankings.';
     }
   };
 }
