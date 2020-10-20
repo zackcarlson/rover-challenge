@@ -3,14 +3,16 @@
 import { createObjectCsvWriter } from 'csv-writer';
 import os from 'os';
 import fs from 'fs';
+import csvtojson from 'csvtojson';
 import Scores from '../Scores/Scores';
 import {
   StayType, JsonType, RowType, SitterType,
 } from '../../types/index';
-import reviews from '../../models/reviews';
+import defaultCsv from '../../models/reviews';
 
 export default class CSV {
-  getJsonData = (): JsonType => {
+  getJsonData = async (csvFilePath: string): Promise<JsonType> => {
+    const reviews = csvFilePath.length > 0 ? await csvtojson().fromFile(csvFilePath) : defaultCsv;
     const json = reviews.reduce((res: JsonType, currStayInfo: StayType) => {
       const { rating, sitter, sitter_email: email } = currStayInfo;
       if (Object.prototype.hasOwnProperty.call(res, sitter)) {
@@ -60,28 +62,32 @@ export default class CSV {
     return sorted;
   };
 
-  writeCSV = async (): Promise<string> => {
+  writeCSV = async (csvFilePath: string, hasWritePermission: boolean): Promise<any> => {
     try {
-      const jsonData: JsonType = this.getJsonData();
+      const jsonData: JsonType = await this.getJsonData(csvFilePath);
       const rows: RowType[] = this.sortRows(this.createRows(jsonData));
-      const downloadPath: string = `${os.homedir()}/Downloads/sitters.csv`;
-      const csvWriter = createObjectCsvWriter({
-        path: downloadPath,
-        header: [
-          { id: 'name', title: 'Sitter name' },
-          { id: 'email', title: 'Sitter email' },
-          { id: 'profile_score', title: 'Profile score' },
-          { id: 'ratings_score', title: 'Ratings score' },
-          { id: 'search_score', title: 'Search Score' },
-        ],
-      });
+      const downloadPath: string = `${os.homedir()}/Downloads/rover-challenge-sitters.csv`;
+      const header = [
+        { id: 'name', title: 'Sitter name' },
+        { id: 'email', title: 'Sitter email' },
+        { id: 'profile_score', title: 'Profile score' },
+        { id: 'ratings_score', title: 'Ratings score' },
+        { id: 'search_score', title: 'Search Score' },
+      ];
 
-      if (fs.existsSync(downloadPath)) {
-        fs.unlinkSync(downloadPath);
+      if (hasWritePermission) {
+        const csvWriter = createObjectCsvWriter({
+          path: downloadPath,
+          header,
+        });
+        if (fs.existsSync(downloadPath)) {
+          fs.unlinkSync(downloadPath);
+        }
+        await csvWriter.writeRecords(rows);
+        return `Successfully calculated and exported Rover sitter search rankings to your ${downloadPath}!`;
       }
 
-      await csvWriter.writeRecords(rows);
-      return `Successfully calculated and exported Rover sitter search rankings to your ${downloadPath}`;
+      return rows;
     } catch (err) {
       return 'Error calculating and exporting Rover sitter search rankings.';
     }

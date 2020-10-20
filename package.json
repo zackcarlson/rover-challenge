@@ -2,19 +2,19 @@
   "name": "rover-challenge",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "src/index.js",
   "bin": {
-    "create-project": "dist/index.js"
+    "rank-search": "dist/index.js"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha --require ts-node/register ./src/test/**/*.spec.ts",
     "lint": "eslint src --fix",
-    "start": "ts-node src/index.ts",
+    "start": "ts-node src/index.js",
     "build": "tsc"
   },
   "keywords": [
     "cli",
-    "create-project"
+    "rank-search"
   ],
   "repository": {
     "type": "git",
@@ -45,9 +45,13 @@
   },
   "dependencies": {
     "@types/mocha": "^8.0.3",
+    "chalk": "^4.1.0",
     "csv-writer": "^1.6.0",
     "csvtojson": "^2.0.10",
     "fs": "0.0.1-security",
+    "inquirer": "^7.3.3",
+    "is-valid-path": "^0.1.1",
+    "log-symbols": "^4.0.0",
     "ora": "^5.1.0",
     "os": "^0.1.1"
   }

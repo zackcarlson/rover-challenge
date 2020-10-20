@@ -9,9 +9,9 @@ import { JsonType, RowType, SitterType } from '../../types/index';
 
 describe('CSV', () => {
   const csv = new CSV();
-
-  describe('getJsonData()', () => {
-    const json: JsonType = csv.getJsonData();
+  const filePath = '';
+  describe('getJsonData()', async () => {
+    const json: JsonType = await csv.getJsonData(filePath);
 
     it('should return expected length of sitters', () => {
       const expected: number = 100;
@@ -31,8 +31,8 @@ describe('CSV', () => {
     });
   });
 
-  describe('createRows()', () => {
-    const json: JsonType = csv.getJsonData();
+  describe('createRows()', async () => {
+    const json: JsonType = await csv.getJsonData(filePath);
     const rows: RowType[] = csv.createRows(json);
 
     it('should return expected data for a singular row', () => {
@@ -44,8 +44,8 @@ describe('CSV', () => {
     });
   });
 
-  describe('sortRows()', () => {
-    const json: JsonType = csv.getJsonData();
+  describe('sortRows()', async () => {
+    const json: JsonType = await csv.getJsonData(filePath);
     const rows: RowType[] = csv.sortRows(csv.createRows(json));
 
     it('should return rows in sorted descending order (by Search score)', () => {
@@ -75,9 +75,9 @@ describe('CSV', () => {
   });
 
   describe('writeCSV()', () => {
-    it('should write the final CSV to the /Downloads/sitters.csv path', async () => {
-      await csv.writeCSV();
-      const downloadPath: string = `${os.homedir()}/Downloads/sitters.csv`;
+    it('should write the final CSV to the /Downloads/rover-challenge-sitters.csv path', async () => {
+      await csv.writeCSV(filePath, true);
+      const downloadPath: string = `${os.homedir()}/Downloads/rover-challenge-sitters.csv`;
       const expected: boolean = true;
       const actual: boolean = fs.existsSync(downloadPath);
 
