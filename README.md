@@ -23,7 +23,7 @@ I'd use React/Redux with TypeScript on the client for quick development, reliabl
 
 I used the following technologies: TypeScript, JavaScript, Mocha, Chalk, Ora, Inquirer, Husky, and Eslint.
 
-### Checklist:
+## Checklist:
 - [x] Are Profile, Rating, and Search Scores computed correctly?
 - [x] Does the output file include all necessary columns, and is it in descending order based on Search Score? 
 - [x] Does the README include setup/running instructions (ideally for Mac)?
