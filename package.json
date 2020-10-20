@@ -7,7 +7,7 @@
     "rank-search": "dist/index.js"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --require ts-node/register ./src/test/**/*.spec.ts",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'src/test/**/*.ts'",
     "lint": "eslint src --fix",
     "start": "ts-node src/index.js",
     "build": "tsc"
