@@ -10,8 +10,12 @@ import { JsonType, RowType, SitterType } from '../../types/index';
 describe('CSV', () => {
   const csv = new CSV();
   const filePath = '';
-  describe('getJsonData()', async () => {
-    const json: JsonType = await csv.getJsonData(filePath);
+  describe('getJsonData()', () => {
+    let json: JsonType;
+
+    before(async () => {
+      json = await csv.getJsonData(filePath);
+    });
 
     it('should return expected length of sitters', () => {
       const expected: number = 100;
@@ -31,9 +35,14 @@ describe('CSV', () => {
     });
   });
 
-  describe('createRows()', async () => {
-    const json: JsonType = await csv.getJsonData(filePath);
-    const rows: RowType[] = csv.createRows(json);
+  describe('createRows()', () => {
+    let json: JsonType;
+    let rows: RowType[];
+
+    before(async () => {
+      json = await csv.getJsonData(filePath);
+      rows = csv.createRows(json);
+    });
 
     it('should return expected data for a singular row', () => {
       const rowKeys = ['email', 'name', 'profile_score', 'ratings_score', 'search_score'];
@@ -44,9 +53,14 @@ describe('CSV', () => {
     });
   });
 
-  describe('sortRows()', async () => {
-    const json: JsonType = await csv.getJsonData(filePath);
-    const rows: RowType[] = csv.sortRows(csv.createRows(json));
+  describe('sortRows()', () => {
+    let json: JsonType;
+    let rows: RowType[];
+
+    before(async () => {
+      json = await csv.getJsonData(filePath);
+      rows = csv.sortRows(csv.createRows(json));
+    });
 
     it('should return rows in sorted descending order (by Search score)', () => {
       const expected: number[] = [

@@ -4,7 +4,7 @@
 import assert from 'assert';
 import Scores from '../../services/Scores/Scores';
 
-describe('CSV', () => {
+describe('Scores', () => {
   const scores = new Scores();
 
   describe('calculateProfileScore()', () => {
